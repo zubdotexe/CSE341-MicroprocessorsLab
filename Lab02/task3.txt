@@ -1,0 +1,115 @@
+.MODEL SMALL
+
+.STACK 100H
+
+.DATA
+
+inp db "Input: $"
+ou db "Output: $" 
+
+28days db "28 days$"
+30days db "30 days$"
+31days db "31 days$"
+
+
+
+
+
+ code segment
+ start:
+ 
+    mov ax, data
+    mov ds, ax
+    mov es, ax
+
+    
+    lea dx, inp
+    mov ah, 9
+    int 21h
+    
+    mov ah, 1
+    int 21h
+    
+    cmp al , 31h
+    je print30
+    
+    cmp al , 32h
+    je print31
+    
+    cmp al , 33h
+    je print30
+    
+    cmp al ,  34h
+    je print31
+    
+    cmp al , 35h
+    je print28
+    
+    cmp al , 36h
+    je print31
+   
+    
+    print28:
+        mov dl, 0ah
+        mov ah , 2
+        int 21h
+        mov dL,0dh 
+        int 21h 
+        mov dL,0ah 
+        int 21h 
+        
+        lea dx, ou
+        mov ah, 9
+        int 21h
+        
+        lea dx, 28days
+        mov ah, 9
+        int 21h
+        jmp exit
+        
+    print30:
+        mov dl, 0ah
+        mov ah , 2
+        int 21h
+        mov dL,0dh 
+        int 21h 
+        mov dL,0ah 
+        int 21h 
+        
+        lea dx, ou
+        mov ah, 9
+        int 21h
+        
+        lea dx, 30days
+        mov ah, 9
+        int 21h
+        jmp exit
+        
+    print31:
+        mov dl, 0ah
+        mov ah , 2
+        int 21h
+        mov dL,0dh 
+        int 21h 
+        mov dL,0ah 
+        int 21h 
+        
+        lea dx, ou
+        mov ah, 9
+        int 21h
+        
+        lea dx, 31days
+        mov ah, 9
+        int 21h
+        jmp exit
+        
+    exit:       
+       
+
+
+end start 
+MOV AX,4C00H
+INT 21H
+
+MAIN ENDP
+   END MAIN

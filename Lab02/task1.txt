@@ -1,0 +1,114 @@
+.MODEL SMALL
+
+.STACK 100H
+
+.DATA 
+
+first db ?
+sec db ?
+third db ?
+
+min db ?
+
+a1 db "1st input: $"
+a2 db 10, 13, "2nd input: $"
+a3 db 10, 13,"3rd input: $"
+a4 db 10, 13,"minimum: $"
+
+
+
+.code
+    main proc 
+
+        mov ax,@data
+        mov ds,ax
+
+
+        lea dx, a1
+        mov ah, 09h
+        int 21h
+
+
+        mov ah, 1
+        int 21h
+
+
+        mov first, al
+
+        lea dx, a2
+        mov ah, 09h
+        int 21h
+
+
+        mov ah, 1
+        int 21h
+
+
+        mov sec, al
+
+
+        lea dx, a3
+        mov ah, 09h
+        int 21h
+
+
+        mov ah, 1
+        int 21h
+
+
+        mov third, al
+
+
+        mov dx, 13
+        mov ah, 2
+        int 21h
+
+        mov dx, 10
+        mov ah, 2
+        int 21h
+
+
+
+        mov al, first
+        mov bl, sec
+        cmp al, bl
+        jnl next
+        mov min, al
+
+        next1:
+        mov al, min
+        mov bl, third
+
+        cmp al, bl
+        jnl now1
+        mov min, al
+        jmp now
+
+
+        next:
+        mov min, bl
+        jmp next1
+
+        now1:
+        mov min, bl
+        jmp now
+
+
+        now:
+
+        lea dx, a4
+        mov ah, 09h
+        int 21h
+
+        mov dl, min
+        mov ah, 2
+        int 21h
+
+
+        mov ax,4c00h
+
+        int 21h
+
+
+MAIN ENDP
+   END MAIN

@@ -1,0 +1,162 @@
+.MODEL SMALL
+
+.STACK 100H
+
+.DATA
+
+a db "Side 1: $"
+b db "Side 2: $"
+c db "Side 3: $"
+t db " T $"
+i db " I $"
+
+
+ code segment
+ start:
+ 
+    mov ax, data
+    mov ds, ax
+    mov es, ax
+
+    
+    lea dx,a
+    mov ah,9
+    int 21h
+
+    mov ah,1
+    int 21h
+
+    mov bl,al
+    sub bl,48 
+
+    mov dl,0AH
+    mov ah ,2
+    int 21h
+    mov dL,0DH 
+    int 21h 
+
+    lea dx,b
+    mov ah,9
+    int 21h
+
+    mov ah,1
+    int 21h
+    mov cl,al
+    sub cl,48
+    
+    mov dl, 0AH
+    mov ah , 2
+    int 21h
+    mov dL,0DH 
+    int 21h 
+     
+     
+    lea dx,c
+    mov ah,9
+    int 21h
+
+    mov ah,1
+    int 21h
+    sub al,48
+             
+    mov ah,al         
+    add ah,bl
+    
+    cmp ah,cl
+    
+    
+    jg next
+    
+    mov dl, 0AH
+    mov ah , 2
+    int 21h
+    mov dL,0DH 
+    int 21h 
+    mov dL,0AH 
+    int 21h 
+            
+    lea dx, i
+    mov ah, 9
+    int 21h
+    jmp exit 
+    
+    next:
+     
+    
+    mov ah,al         
+    add ah,cl
+    
+    cmp ah,bl
+    
+     
+    jg next1
+    
+    mov dl, 0AH
+    mov ah , 2
+    int 21h
+    mov dL,0DH 
+    int 21h 
+    mov dL,0AH 
+    int 21h 
+            
+    lea dx, i
+    mov ah, 9
+    int 21h
+    jmp exit 
+    
+    next1: 
+     
+    
+    
+    mov ah,bl         
+    add ah,cl
+    
+    cmp ah,al
+    jg triangle
+    
+    
+    
+       
+    mov dl, 0AH
+    mov ah , 2
+    int 21h
+    mov dL,0DH 
+    int 21h 
+    mov dL,0AH 
+    int 21h 
+            
+    lea dx, i
+    mov ah, 9
+    int 21h
+    jnl exit 
+
+   
+    
+
+    
+    
+    triangle:
+    
+        mov dl, 0AH
+        mov ah , 2
+        int 21h
+        mov dL,0DH 
+        int 21h 
+        mov dL,0AH 
+        int 21h 
+            
+        lea dx, t
+        mov ah, 9
+        int 21h
+        jmp exit
+        
+    exit:       
+       
+
+
+end start 
+MOV AX,4C00H
+INT 21H
+
+MAIN ENDP
+   END MAIN
