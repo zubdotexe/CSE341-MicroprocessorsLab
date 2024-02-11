@@ -1,0 +1,52 @@
+;.model small
+;.stack 100h
+;.data
+;.code
+;    main proc
+;    
+;    mov cx, 80 ; runs 80 times
+;    mov ah, 2
+;    
+;    start:
+;    mov dl, 42 ; 42 = star's ascii code
+;    int 21h
+;    
+;    loop start
+;        
+;        
+;    main endp        
+;end main
+
+
+
+.model small
+.stack 100h
+.data
+.code
+    main proc
+    
+    mov cx, 3 ;for taking 3 numbers
+    mov ah, 1 
+    mov bx, 0
+    
+    start:
+        int 21h
+        sub ax, 48
+    
+        add bx, ax ; ax e ja asche ta bx e save korchi
+    
+    loop start
+    
+    
+    mov ax, bx ; saving bx in ax so that the val don't get lost
+    mov cx, 3  ; cx e 3 move na korle kaj korche na karon cx er val 0 hoye ache
+    div cx     
+    
+    mov dl, al ; dl e move kora hocche output deyar jonno
+    add dl, 48 ; 48 add kora hocche jeno ascii val na eshe correct val ashe
+    
+    mov ah, 2
+    int 21h 
+        
+    main endp        
+end main

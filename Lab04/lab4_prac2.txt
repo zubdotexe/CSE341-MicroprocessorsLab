@@ -1,0 +1,49 @@
+.MODEL SMALL
+ 
+.STACK 100H
+
+.DATA
+
+.CODE
+MAIN PROC
+
+    ;iniitialize DS
+
+    MOV AX,@DATA
+    MOV DS,AX
+ 
+    ; enter your code here
+
+    mov bx, 100 
+    mov cx, 20
+    mov ax, 0
+    
+    start:
+    add ax, bx
+    sub bx, 5
+    
+    loop start
+ 
+;    end:
+;
+;    mov bx, 1
+;    mov ax, 0
+;    
+;    start:
+;    cmp bx, 148
+;    jg end
+;    
+;    add ax, bx
+;    add bx, 3
+;    
+;    jmp start
+;    
+;    end:
+
+
+    MAIN ENDP
+END MAIN
+
+
+
+

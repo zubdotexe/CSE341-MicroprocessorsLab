@@ -1,0 +1,2 @@
+1. print a row of 80 stars
+2. take 3 inputs and print their average
