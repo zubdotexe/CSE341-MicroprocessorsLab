@@ -1,0 +1,2 @@
+1. print 5, 7, 2, 7, 5 in reverse order
+2. take 5 inputs and print the minimum number

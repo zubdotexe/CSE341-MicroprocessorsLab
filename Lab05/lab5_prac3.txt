@@ -1,0 +1,105 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+    a DB "Enter Name: $"
+    b DB "Output: $"   
+    
+    array DB 20 DUP(?)
+
+.CODE   
+    MAIN PROC
+        MOV AX, @DATA
+        MOV DS, AX
+        
+        MOV AH, 9
+        LEA DX, a
+        INT 21H 
+        
+        MOV CX, 20
+        MOV SI, 0
+        
+        INPUT:  
+            MOV AH, 1
+            INT 21H
+            MOV array[SI], AL
+            
+            INC SI            
+        LOOP INPUT
+        
+;        MOV AH, 2
+;        MOV DL, 0DH
+;        INT 21H
+;        
+;        MOV DL, 0AH
+;        INT 21H  
+;        
+;        MOV AH, 2 
+;        MOV CX, 20  
+;        MOV SI, 0
+;        
+;        PRINT:
+;            MOV Dl, array[SI]
+;            INT 21H  
+;            INC SI
+;        LOOP PRINT
+        
+        MOV CX, 20
+        MOV SI, 0
+        
+        CHANGE: 
+            CMP CX, 0H
+            JE BEFORE_RES
+            
+            CMP array[SI], 20H
+            JE CAN_SPA
+            
+            CMP array[SI], 5AH
+            JLE CAP
+            
+            CMP array[SI], 61H
+            JGE SMALL         
+        LOOP CHANGE        
+        
+        CAN_SPA:  
+            ADD SI, 1
+            SUB CX, 1
+            JMP CHANGE
+            
+        CAP:
+            ADD array[SI], 20H
+            ADD SI, 1
+            SUB CX, 1
+            JMP CHANGE
+            
+        SMALL:
+            SUB array[SI], 20H
+            ADD SI, 1
+            SUB CX, 1
+            JMP CHANGE
+        
+        BEFORE_RES:
+            MOV CX, 20
+            MOV SI, 0
+            
+            MOV AH, 2
+            MOV DL, 0AH
+            INT 21H
+            
+            MOV DL, 0DH
+            INT 21H 
+            
+            MOV AH, 9
+            LEA DX, b
+            INT 21H   
+            
+        PRINT:   
+            MOV AH, 2
+            MOV BL, array[SI]
+            MOV DL, BL
+            INT 21H
+            
+            ADD SI, 1     
+        LOOP PRINT       
+        
+    MAIN ENDP    
+END MAIN   
