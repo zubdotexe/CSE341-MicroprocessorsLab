@@ -1,0 +1,85 @@
+.MODEL SMALL
+ 
+.STACK 100H
+
+.DATA
+RES1 DB 'number is even$'
+RES2 DB 'number is odd$' 
+
+.CODE
+MAIN PROC
+
+    ;iniitialize DS
+
+    MOV AX,@DATA
+    MOV DS,AX
+ 
+    ; enter your code here
+    
+    ;INPUT 1
+    MOV AH, 1
+    INT 21H
+    
+    MOV CL, AL
+    SUB CL, 48
+    
+    ;DIVISION PROC
+    MOV BL, 2
+    
+    MOV AL, CL
+    
+    ;MANUALLY MAKNIG AH 0
+    MOV AH, 0H
+    DIV BL
+    
+    ;MOVING TO CX
+    MOV CL, AL
+    MOV CH, AH
+          
+    ADD CL, 48
+    ADD CH, 48
+    
+   ; ;OUTPUT
+;    MOV DL, CL      
+;    MOV AH, 2
+;    INT 21H
+;    
+;    MOV DL, CH
+;    MOV AH, 2
+;    INT 21H 
+    
+    
+    ;NEW LINE
+    MOV AH, 2
+    MOV DL, 0AH
+    INT 21H
+    
+    MOV AH, 2
+    MOV DL, 0DH 
+    INT 21H
+    
+    ;CHECKER
+    CMP CH, 48
+    JE IF
+    JNE ELSE
+    
+    IF:
+    MOV AH, 9
+    LEA DX, RES1
+    INT 21H
+    JMP END
+    
+    ELSE:
+    MOV AH, 9
+    LEA DX, RES2
+    INT 21H
+    
+    END:
+
+    ;exit to DOS
+               
+    MOV AX,4C00H
+    INT 21H
+
+MAIN ENDP
+    END MAIN
